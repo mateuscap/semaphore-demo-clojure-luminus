@@ -47,7 +47,9 @@ blocks:
         commands:
           - checkout
           - cache restore lein-deps-$(checksum project.clj)
-          - mv home/semaphore/.m2 ~/.m2
+          - '#mv home/semaphore/.m2 ~/.m2'
+          - mv home/semaphore/.m2 ~/.m2 2>/dev/null || true
+          - '#'
           - cache restore lein-$(checksum `which lein`)
           - mv home/semaphore/.lein ~/.lein 2>/dev/null || true
       jobs:
