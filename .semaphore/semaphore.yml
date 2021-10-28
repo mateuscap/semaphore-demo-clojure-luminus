@@ -39,6 +39,9 @@ blocks:
         - name: Clojure tests
           commands:
             - lein test
+            - '#'
+            - cache store lein-deps-$(checksum project.clj) ~/.m2
+            - cache store lein-$(checksum `which lein`) ~/.lein
   - name: Build
     task:
       prologue:
