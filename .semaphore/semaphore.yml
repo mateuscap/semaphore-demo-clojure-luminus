@@ -41,6 +41,10 @@ blocks:
         - name: Clojure tests
           commands:
             - lein test
+      epilogue:
+        always:
+          commands:
+            - test-results publish guestbook_test.db.trace.db
   - name: Build
     task:
       prologue:
