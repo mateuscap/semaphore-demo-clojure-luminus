@@ -8,10 +8,10 @@ after_pipeline:
   task:
     jobs:
       - name: Reports
-commands:
-- test-results gen-pipeline-report
+        commands:
+          - test-results gen-pipeline-report
 blocks:
-  - name: "Setup"
+  - name: Setup
     task:
       prologue:
         commands:
@@ -23,10 +23,10 @@ blocks:
       jobs:
         - name: Dependencies
           commands:
-            - lein with-profile +dev,+test,+uberjar deps
+            - 'lein with-profile +dev,+test,+uberjar deps'
             - cache store lein-deps-$(checksum project.clj) ~/.m2
             - cache store lein-$(checksum `which lein`) ~/.lein
-  - name: "Tests"
+  - name: Tests
     task:
       prologue:
         commands:
@@ -39,7 +39,7 @@ blocks:
         - name: Clojure tests
           commands:
             - lein test
-  - name: "Build"
+  - name: Build
     task:
       prologue:
         commands:
