@@ -4,12 +4,6 @@ agent:
   machine:
     type: e1-standard-2
     os_image: ubuntu1804
-after_pipeline:
-  task:
-    jobs:
-      - name: Reports
-        commands:
-          - test-results gen-pipeline-report
 blocks:
   - name: Setup
     task:
@@ -23,6 +17,7 @@ blocks:
       jobs:
         - name: Dependencies
           commands:
+            - echo "quick echo"
             - 'lein with-profile +dev,+test,+uberjar deps'
             - cache store lein-deps-$(checksum project.clj) ~/.m2
             - cache store lein-$(checksum `which lein`) ~/.lein
@@ -62,6 +57,12 @@ blocks:
             - lein uberjar
             - cache delete uberjar-latest
             - cache store uberjar-latest target/uberjar/guestbook.jar
+after_pipeline:
+  task:
+    jobs:
+      - name: Reports
+        commands:
+          - test-results gen-pipeline-report
 promotions:
   - name: Production deploy
     pipeline_file: production-deploy.yml
